@@ -33,7 +33,7 @@ function LeftSidebar() {
             <Link
               href={link.route}
               key={link.label}
-              className={`relative flex justify-start gap-2 mt-4 rounded-lg p-2${active && "transition duration-500 ease-in-out bg-blue-700 rounded-full text-white"}`}
+              className={`relative flex justify-start gap-2 mt-4 rounded-lg p-2 ${active && "transition duration-500 ease-in-out bg-blue-500 rounded-full text-white"}`}
             >
               <img
                 src={link.imgUrl}

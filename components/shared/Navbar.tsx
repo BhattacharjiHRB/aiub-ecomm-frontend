@@ -4,11 +4,13 @@ import { BaggageClaimIcon, LogOut, StoreIcon, UserCheck } from "lucide-react";
 
 import { useEffect, useState } from "react";
 
+import Link from "next/link";
+import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import Cart from "./Cart";
 import SearchBar from "./Search";
 import Wishlist from "./WhishList";
 
-interface UserData {
+export interface UserData {
   id: number;
   name?: string;
   email?: string;
@@ -19,7 +21,6 @@ interface UserData {
 function Navbar() {
   const [user, setUser] = useState<UserData | null>(null);
 
-  // Load user from localStorage
   useEffect(() => {
     const storedUser =
       typeof window !== "undefined" ? localStorage.getItem("data") : null;
@@ -53,13 +54,18 @@ function Navbar() {
 
     switch (user.role?.toLowerCase()) {
       case "merchant":
-        return "/dashboard/merchant";
+        return "/dashboard/merchant/home";
       case "admin":
-        return "/dashboard/admin";
+        return "/dashboard/admin/home";
       default:
         return "/";
     }
   };
+  const initials = user?.name
+    ?.split(" ")
+    .map((n: string) => n[0])
+    .join("")
+    .toUpperCase();
 
   return (
     <nav className="bg-white border-b border-gray-200">
@@ -115,6 +121,20 @@ function Navbar() {
                   <LogOut className="w-5 h-5" />
                   Logout
                 </button>
+
+                <Link
+                  href={`/profile/${user.id}`}
+                  className=" w-10 h-10 rounded flex  justify-center items-center  "
+                >
+                  <Avatar>
+                    <AvatarImage
+                      src="assets/icons/user.svg"
+                      alt="user"
+                      className="w-7.5 h-7.5 "
+                    />
+                    <AvatarFallback>{initials}</AvatarFallback>
+                  </Avatar>
+                </Link>
               </>
             ) : (
               <>

@@ -10,7 +10,7 @@ export interface CartItem {
   id: string;
   name: string;
   price: number;
-  imageUrl: string;
+  imageUrl: string[];
   quantity: number;
 }
 
@@ -41,7 +41,7 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
       const quantity = existingItem ? existingItem.quantity + 1 : 1;
 
       await axiosFetch.post("cart", {
-        userId: Number(user.id), // ✅ FIXED
+        userId: Number(user.id),
         productId: Number(item.id),
         quantity: quantity,
       });
@@ -69,17 +69,14 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
     }
   };
 
-  // REMOVE
   const removeFromCart = (id: string) => {
     setCartItems((prev) => prev.filter((item) => item.id !== id));
   };
 
-  // CLEAR
   const clearCart = () => {
     setCartItems([]);
   };
 
-  // ✅ CONFIRM ORDER FIXED
   const confirmOrder = async () => {
     try {
       const user = currentUser();

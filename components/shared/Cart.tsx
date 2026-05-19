@@ -3,6 +3,7 @@
 import { ShoppingCart, X } from "lucide-react";
 import { useState } from "react";
 
+import { baseImageUrl } from "@/lib/axios";
 import { useCart } from "@/lib/contexts/CartContext";
 
 interface CartProps {
@@ -23,7 +24,6 @@ export default function Cart({ userId }: CartProps) {
 
   return (
     <div className="relative">
-      {/* Cart Button */}
       <button
         onClick={() => setIsOpen(!isOpen)}
         className="relative p-2 text-gray-700 hover:text-blue-600 transition-colors"
@@ -38,7 +38,6 @@ export default function Cart({ userId }: CartProps) {
         )}
       </button>
 
-      {/* Cart Modal */}
       {isOpen && (
         <div className="absolute right-0 mt-2 w-96 bg-white rounded-xl shadow-2xl border border-gray-200 z-50">
           <div className="p-5">
@@ -61,18 +60,15 @@ export default function Cart({ userId }: CartProps) {
               </div>
             ) : (
               <>
-                {/* Cart Items */}
                 <div className="space-y-4 max-h-96 overflow-y-auto">
                   {cartItems.map((item) => (
                     <div key={item.id} className="flex gap-3 border-b pb-4">
-                      {/* Product Image */}
                       <img
-                        src={item.imageUrl}
+                        src={`${baseImageUrl}${item.imageUrl[0]}`}
                         alt={item.name}
                         className="w-16 h-16 object-cover rounded-lg border"
                       />
 
-                      {/* Product Info */}
                       <div className="flex-1 min-w-0">
                         <h3 className="text-sm font-semibold text-gray-900 truncate">
                           {item.name}
@@ -87,7 +83,6 @@ export default function Cart({ userId }: CartProps) {
                         </p>
                       </div>
 
-                      {/* Remove Button */}
                       <button
                         onClick={() => removeFromCart(item.id)}
                         className="flex text-gray-400 hover:text-red-500 transition-colors"
@@ -99,7 +94,6 @@ export default function Cart({ userId }: CartProps) {
                   ))}
                 </div>
 
-                {/* Footer */}
                 <div className="mt-6 border-t pt-4">
                   <div className="flex justify-between items-center mb-4">
                     <span className="text-lg font-semibold">Total</span>

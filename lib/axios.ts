@@ -1,6 +1,6 @@
 import axios from "axios";
 
-export const baseImageUrl = "http://localhost:4000/api/";
+export const baseImageUrl = "http://localhost:4000";
 
 export const storageToken =
   typeof window !== "undefined" ? window.localStorage.getItem("data") : null;

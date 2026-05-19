@@ -15,11 +15,16 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 
+import { axiosFetch } from "@/lib/axios";
 import { merchantValidation } from "@/lib/validations";
+import { useRouter } from "next/navigation";
+import { toast } from "sonner";
 
 type FormValues = z.infer<typeof merchantValidation>;
 
 export default function MerchantCreationForm() {
+  const router = useRouter();
+
   const form = useForm<FormValues>({
     resolver: zodResolver(merchantValidation),
     defaultValues: {
@@ -29,13 +34,21 @@ export default function MerchantCreationForm() {
       password: "",
       address: "",
       phoneNumber: "",
+      role: "merchant",
     },
   });
 
   async function onSubmit(values: FormValues) {
-    console.log(values);
+    try {
+      const res = await axiosFetch.post("users/merchants/register", values);
+      const newUser = res.data.data;
+      toast.success(`Account for ${newUser.username} created successfully!`);
 
-    alert(JSON.stringify(values));
+      router.push("/login");
+    } catch (error: any) {
+      console.error(error);
+      toast.error("Signup failed");
+    }
   }
 
   return (

@@ -61,7 +61,6 @@ const LoginForm = () => {
           name="email"
           render={({ field }) => (
             <FormItem>
-              {/* <FormLabel>Email</FormLabel> */}
               <FormControl>
                 <Input
                   type="phone"

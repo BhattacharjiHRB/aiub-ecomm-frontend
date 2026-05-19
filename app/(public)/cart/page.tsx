@@ -1,199 +1,190 @@
-// app/cart/[userId]/page.tsx
+// import { axiosFetch } from "@/lib/axios";
+// import { currentUser } from "@/lib/CheckUser";
+// import Image from "next/image";
 
-import { axiosFetch } from "@/lib/axios";
-import { currentUser } from "@/lib/CheckUser";
-import Image from "next/image";
+// async function getCart(userId: number) {
+//   try {
+//     const res = await axiosFetch.get(`/cart/${userId}`);
 
-async function getCart(userId: number) {
-  const res = await axiosFetch.get(`cart/${userId}`
-   
-   );
+//     return res.data.data;
+//   } catch (error) {
+//     console.error("Cart Fetch Error:", error);
 
- const cart=res.data.data;
- return cart;
-}
+//     return {
+//       id: null,
+//       items: [],
+//     };
+//   }
+// }
 
-export default async function CartPage({
-  params,
-}: {
-  params: { userId: string };
-}) {
-  const user=currentUser();
-  const cart = await getCart(user?.id);
+// export default async function CartPage() {
+//   const user = await currentUser();
 
-  const subtotal = cart.items.reduce(
-    (acc: number, item: any) =>
-      acc + item.quantity * item.price,
-    0
-  );
+//   if (!user?.id) {
+//     return <div className="p-10 text-center text-red-500">User not found</div>;
+//   }
 
-  return (
-    <div className="min-h-screen bg-[#f5f7fb] p-6">
-      <div className="mx-auto max-w-7xl">
-        {/* Header */}
-        <div className="mb-6 flex items-center justify-between">
-          <div>
-            <h1 className="text-3xl font-bold text-[#0e1117]">
-              Shopping Cart
-            </h1>
+//   const cart = await getCart(user.id);
 
-            <p className="mt-1 text-sm text-gray-500">
-              {cart.items.length} Products
-            </p>
-          </div>
+//   const subtotal = cart.items.reduce(
+//     (acc: number, item: any) =>
+//       acc + item.quantity * Number(item.product.price),
+//     0,
+//   );
 
-          <button className="rounded-full bg-red-500 px-6 py-3 text-sm font-medium text-white">
-            Checkout
-          </button>
-        </div>
+//   return (
+//     <div className="min-h-screen bg-[#f5f6fa] p-6">
+//       <div className="mx-auto max-w-7xl">
+//         {/* Header */}
+//         <div className="mb-8 flex items-center justify-between">
+//           <div>
+//             <h1 className="text-3xl font-bold text-[#0e1117]">Shopping Cart</h1>
 
-        <div className="grid gap-6 lg:grid-cols-3">
-          {/* Left */}
-          <div className="lg:col-span-2">
-            <div className="overflow-hidden rounded-2xl bg-white shadow-sm">
-              <table className="w-full">
-                <thead className="border-b bg-[#f8fafc]">
-                  <tr className="text-left text-sm text-gray-500">
-                    <th className="px-5 py-4 font-medium">
-                      Product
-                    </th>
+//             <p className="mt-1 text-sm text-gray-500">
+//               {cart.items.length} Products
+//             </p>
+//           </div>
 
-                    <th className="px-5 py-4 font-medium">
-                      Price
-                    </th>
+//           <button className="rounded-xl bg-red-500 px-6 py-3 text-sm font-medium text-white transition hover:bg-red-600">
+//             Checkout
+//           </button>
+//         </div>
 
-                    <th className="px-5 py-4 font-medium">
-                      Quantity
-                    </th>
+//         <div className="grid gap-6 lg:grid-cols-3">
+//           {/* LEFT */}
+//           <div className="lg:col-span-2">
+//             <div className="overflow-hidden rounded-2xl bg-white shadow-sm">
+//               <table className="w-full">
+//                 <thead className="border-b bg-[#f8fafc]">
+//                   <tr className="text-left text-sm text-gray-500">
+//                     <th className="px-6 py-4 font-medium">Product</th>
 
-                    <th className="px-5 py-4 font-medium">
-                      Total
-                    </th>
-                  </tr>
-                </thead>
+//                     <th className="px-6 py-4 font-medium">Price</th>
 
-                <tbody>
-                  {cart.items.map((item: any) => (
-                    <tr
-                      key={item._id}
-                      className="border-b"
-                    >
-                      {/* Product */}
-                      <td className="px-5 py-5">
-                        <div className="flex items-center gap-4">
-                          <div className="relative h-20 w-20 overflow-hidden rounded-xl border">
-                            <Image
-                              src={item.image}
-                              alt={item.name}
-                              fill
-                              className="object-cover"
-                            />
-                          </div>
+//                     <th className="px-6 py-4 font-medium">Quantity</th>
 
-                          <div>
-                            <h3 className="max-w-[250px] text-sm font-semibold text-gray-800">
-                              {item.name}
-                            </h3>
+//                     <th className="px-6 py-4 font-medium">Total</th>
+//                   </tr>
+//                 </thead>
 
-                            <p className="mt-1 text-xs text-gray-500">
-                              UPC: {item.upc}
-                            </p>
-                          </div>
-                        </div>
-                      </td>
+//                 <tbody>
+//                   {cart.items.map((item: any) => {
+//                     const product = item.product;
 
-                      {/* Price */}
-                      <td className="px-5 py-5 text-sm font-medium">
-                        ${item.price}
-                      </td>
+//                     return (
+//                       <tr key={item.id} className="border-b">
+//                         {/* PRODUCT */}
+//                         <td className="px-6 py-5">
+//                           <div className="flex items-center gap-4">
+//                             <div className="relative h-20 w-20 overflow-hidden rounded-xl border bg-gray-100">
+//                               <Image
+//                                 src={
+//                                   product.imageUrl ||
+//                                   "https://placehold.co/300x300/png"
+//                                 }
+//                                 alt={product.name}
+//                                 fill
+//                                 className="object-cover"
+//                               />
+//                             </div>
 
-                      {/* Quantity */}
-                      <td className="px-5 py-5">
-                        <div className="flex w-fit items-center overflow-hidden rounded-lg border">
-                          <button className="px-3 py-2 text-lg">
-                            -
-                          </button>
+//                             <div>
+//                               <h3 className="max-w-[250px] text-sm font-semibold text-gray-800">
+//                                 {product.name}
+//                               </h3>
 
-                          <span className="px-4 py-2 text-sm font-medium">
-                            {item.quantity}
-                          </span>
+//                               <p className="mt-1 text-xs text-gray-500">
+//                                 Category: {product.category}
+//                               </p>
 
-                          <button className="px-3 py-2 text-lg">
-                            +
-                          </button>
-                        </div>
-                      </td>
+//                               <p className="mt-1 text-xs text-gray-400">
+//                                 Stock: {product.stock}
+//                               </p>
+//                             </div>
+//                           </div>
+//                         </td>
 
-                      {/* Total */}
-                      <td className="px-5 py-5 text-sm font-semibold">
-                        $
-                        {item.quantity * item.price}
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          </div>
+//                         {/* PRICE */}
+//                         <td className="px-6 py-5 text-sm font-medium">
+//                           ${Number(product.price).toFixed(2)}
+//                         </td>
 
-          {/* Right */}
-          <div>
-            <div className="rounded-2xl bg-white p-6 shadow-sm">
-              <h2 className="mb-6 text-xl font-bold text-[#0e1117]">
-                Cart Summary
-              </h2>
+//                         {/* QUANTITY */}
+//                         <td className="px-6 py-5">
+//                           <div className="flex w-fit items-center overflow-hidden rounded-lg border">
+//                             <button className="px-3 py-2 text-lg">-</button>
 
-              <div className="space-y-4">
-                <div className="flex items-center justify-between text-sm">
-                  <span className="text-gray-500">
-                    Subtotal
-                  </span>
+//                             <span className="px-4 py-2 text-sm font-medium">
+//                               {item.quantity}
+//                             </span>
 
-                  <span className="font-medium">
-                    ${subtotal}
-                  </span>
-                </div>
+//                             <button className="px-3 py-2 text-lg">+</button>
+//                           </div>
+//                         </td>
 
-                <div className="flex items-center justify-between text-sm">
-                  <span className="text-gray-500">
-                    Shipping
-                  </span>
+//                         {/* TOTAL */}
+//                         <td className="px-6 py-5 text-sm font-semibold">
+//                           ${(item.quantity * Number(product.price)).toFixed(2)}
+//                         </td>
+//                       </tr>
+//                     );
+//                   })}
+//                 </tbody>
+//               </table>
 
-                  <span className="font-medium">
-                    $20
-                  </span>
-                </div>
+//               {/* EMPTY CART */}
+//               {cart.items.length === 0 && (
+//                 <div className="p-10 text-center text-gray-500">
+//                   Your cart is empty
+//                 </div>
+//               )}
+//             </div>
+//           </div>
 
-                <div className="flex items-center justify-between text-sm">
-                  <span className="text-gray-500">
-                    Tax
-                  </span>
+//           {/* RIGHT */}
+//           <div>
+//             <div className="rounded-2xl bg-white p-6 shadow-sm">
+//               <h2 className="mb-6 text-xl font-bold text-[#0e1117]">
+//                 Cart Summary
+//               </h2>
 
-                  <span className="font-medium">
-                    $15
-                  </span>
-                </div>
+//               <div className="space-y-4">
+//                 <div className="flex items-center justify-between text-sm">
+//                   <span className="text-gray-500">Subtotal</span>
 
-                <div className="border-t pt-4">
-                  <div className="flex items-center justify-between">
-                    <span className="text-lg font-bold">
-                      Total
-                    </span>
+//                   <span className="font-medium">${subtotal.toFixed(2)}</span>
+//                 </div>
 
-                    <span className="text-xl font-bold text-red-500">
-                      ${subtotal + 20 + 15}
-                    </span>
-                  </div>
-                </div>
+//                 <div className="flex items-center justify-between text-sm">
+//                   <span className="text-gray-500">Shipping</span>
 
-                <button className="mt-6 w-full rounded-xl bg-[#0e1117] py-3 text-sm font-medium text-white">
-                  Proceed To Checkout
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-}
+//                   <span className="font-medium">$20.00</span>
+//                 </div>
+
+//                 <div className="flex items-center justify-between text-sm">
+//                   <span className="text-gray-500">Tax</span>
+
+//                   <span className="font-medium">$15.00</span>
+//                 </div>
+
+//                 <div className="border-t pt-4">
+//                   <div className="flex items-center justify-between">
+//                     <span className="text-lg font-bold">Total</span>
+
+//                     <span className="text-xl font-bold text-red-500">
+//                       ${(subtotal + 20 + 15).toFixed(2)}
+//                     </span>
+//                   </div>
+//                 </div>
+
+//                 <button className="mt-6 w-full rounded-xl bg-[#0e1117] py-3 text-sm font-medium text-white transition hover:bg-black">
+//                   Proceed To Checkout
+//                 </button>
+//               </div>
+//             </div>
+//           </div>
+//         </div>
+//       </div>
+//     </div>
+//   );
+// }

@@ -15,11 +15,12 @@ export const merchantValidation = z.object({
   password: z.string().min(6, "Password must be at least 6 characters"),
   address: z.string().min(1, "Address is required"),
   phoneNumber: z.string().min(1, "Phone number is required"),
+  role: z.string(),
 });
 
 export const signupValidation = z.object({
   email: z.string().email(),
-  password: z.string().min(6),
+  password: z.string().min(8),
   name: z.string().min(2),
   username: z.string().min(3),
   address: z.string().min(5),

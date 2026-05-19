@@ -1,24 +1,20 @@
 export const sidebarLinks = [
   {
     imgUrl: "/assets/icons/menu-board.svg",
-    route: "/",
+    route: "/dashboard/admin/home",
     label: "Dashboard",
   },
   {
     imgUrl: "/assets/icons/activities.svg",
-    route: "/activity",
-    label: "Activity",
+    route: "merchants",
+    label: "Merchants",
   },
   {
     imgUrl: "/assets/icons/calendar-add.svg",
-    route: "/booking",
-    label: "Bookings",
+    route: "users",
+    label: "Users",
   },
-  {
-    imgUrl: "/assets/icons/user.svg",
-    route: "/profile",
-    label: "Profile",
-  },
+
   {
     imgUrl: "/assets/icons/graph.svg",
     route: "/analytics",

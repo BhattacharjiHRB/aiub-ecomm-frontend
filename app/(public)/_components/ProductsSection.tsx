@@ -23,8 +23,8 @@ export default function ProductSection({ products }: any) {
             name={product.name}
             price={product.price}
             volume={product.stock}
-            volumeUnit="Pc"
-            imageUrl={product.imageUrl?.split?.(",")?.[0] ?? ""}
+            volumeUnit="Pcs"
+            imageUrl={product.imageUrl ?? []}
             onAddToCart={addToCart}
           />
         ))}
