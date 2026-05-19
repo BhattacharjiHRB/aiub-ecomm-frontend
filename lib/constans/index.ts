@@ -7,29 +7,25 @@ export const sidebarLinks = [
   {
     imgUrl: "/assets/icons/activities.svg",
     route: "merchants",
-    label: "Merchants",
+    label: "Merchants management",
   },
   {
     imgUrl: "/assets/icons/calendar-add.svg",
     route: "users",
-    label: "Users",
+    label: "Users Management",
   },
 
   {
     imgUrl: "/assets/icons/graph.svg",
     route: "products",
-    label: "Products",
+    label: "Products Management",
   },
   {
     imgUrl: "/assets/icons/book.svg",
-    route: "/guide",
-    label: "Guide Management",
+    route: "orders",
+    label: "Orders Management",
   },
-  {
-    imgUrl: "/assets/icons/ranking.svg",
-    route: "/review",
-    label: "Review Management",
-  },
+
   {
     imgUrl: "/assets/icons/headphone.svg",
     route: "/help",

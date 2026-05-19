@@ -8,7 +8,7 @@ import { useEffect, useState } from "react";
 
 const quickLinks = [
   {
-    href: "/admin/products",
+    href: "/dashboard/admin/products",
     icon: <Package size={16} />,
     label: "Manage products",
   },
@@ -17,7 +17,11 @@ const quickLinks = [
     icon: <ClipboardList size={16} />,
     label: "View orders",
   },
-  { href: "/admin/users", icon: <Users size={16} />, label: "Manage users" },
+  {
+    href: "/dashboard/admin/users",
+    icon: <Users size={16} />,
+    label: "Manage users",
+  },
 ];
 
 interface Order {
