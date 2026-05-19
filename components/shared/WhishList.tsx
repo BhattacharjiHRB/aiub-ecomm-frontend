@@ -1,11 +1,12 @@
 "use client";
 
+import { baseImageUrl } from "@/lib/axios";
 import { Heart, X } from "lucide-react";
 import { useEffect, useState } from "react";
 
 export interface WishlistItem {
   id: string;
-  title: string;
+  name: string;
   price: number;
   imageUrl: string;
 }
@@ -113,25 +114,25 @@ export default function Wishlist({ onRemove }: WishlistProps) {
                   >
                     {/* Product Image */}
                     <img
-                      src={item.imageUrl}
-                      alt={item.title}
+                      src={`${baseImageUrl}${item.imageUrl[0]}`}
+                      alt={item.name}
                       className="w-12 h-12 object-cover rounded"
                     />
 
                     {/* Product Info */}
                     <div className="flex-1 min-w-0">
                       <p className="text-sm font-medium text-gray-900 truncate">
-                        {item.title}
+                        {item.name}
                       </p>
                       <p className="text-sm font-semibold text-blue-600">
-                        ${item.price.toFixed(2)}
+                        ${item.price}
                       </p>
                     </div>
 
                     {/* Remove Button */}
                     <button
                       onClick={() => handleRemove(item.id)}
-                      className="flex-shrink-0 text-gray-400 hover:text-red-500 transition-colors"
+                      className="flex text-gray-400 hover:text-red-500 transition-colors"
                       aria-label="Remove from wishlist"
                     >
                       <X className="w-4 h-4" />

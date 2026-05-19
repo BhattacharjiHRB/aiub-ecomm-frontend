@@ -1,5 +1,6 @@
 import Navbar from "@/components/shared/Navbar";
 import { Toaster } from "@/components/ui/sonner";
+import { CartProvider } from "@/lib/contexts/CartContext";
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "../globals.css";
@@ -25,8 +26,8 @@ export default function PublicLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={` h-full antialiased`}>
-      <body className={` ${geistSans.variable} ${geistMono.variable}`}>
+    <>
+      <CartProvider>
         <Navbar />
         <main className="flex flex-row">
           <section className="flex min-h-screen flex-1 flex-col items-center bg-dark-1 px-6 pb-10 pt-10 max-md:pb-32 sm:px-10">
@@ -36,7 +37,7 @@ export default function PublicLayout({
             </div>
           </section>
         </main>
-      </body>
-    </html>
+      </CartProvider>
+    </>
   );
 }

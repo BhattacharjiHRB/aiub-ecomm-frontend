@@ -1,9 +1,16 @@
+import { baseImageUrl } from "@/lib/axios";
 import Favourite, { WishlistItemData } from "./Favourite";
 
+interface AddToCartPayload {
+  id: string;
+  name: string;
+  price: number;
+  imageUrl: string;
+}
 interface ProductCardProps {
   id: string;
-  itemNumber: string;
-  title: string;
+  category: string;
+  name: string;
   description?: string;
   price: number;
   sellingInfo?: string;
@@ -11,30 +18,33 @@ interface ProductCardProps {
   volumeUnit?: string;
   imageUrl: string;
   imageAlt?: string;
-  onAddToCart?: () => void;
+  onAddToCart?: (item: AddToCartPayload) => void;
   onFavorite?: () => void;
   isFavorited?: boolean;
 }
 
 export default function ProductCard({
   id,
-  itemNumber,
-  title,
+  name,
   description,
+  category,
   price,
   sellingInfo,
   volume,
-  volumeUnit = "oz",
+  volumeUnit = "pc",
   imageUrl,
   imageAlt = "Product image",
   onAddToCart,
 }: ProductCardProps) {
   const productData: WishlistItemData = {
     id,
-    title,
+    name,
     price,
     imageUrl,
   };
+
+  const firstImage = imageUrl?.split?.(",")?.[0] ?? "/placeholder.png";
+
   return (
     <div className="w-full max-w-sm bg-white rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow">
       {/* Header with favorite button */}
@@ -43,7 +53,7 @@ export default function ProductCard({
         {/* Product Image */}
         <div className="flex justify-center">
           <img
-            src={imageUrl}
+            src={`${baseImageUrl}${firstImage}`}
             alt={imageAlt}
             className="w-32 h-32 object-contain"
           />
@@ -54,15 +64,15 @@ export default function ProductCard({
       <div className="px-6 py-4">
         {/* id and Item Number */}
         <div className="mb-3 space-y-1">
-          <p className="text-sm font-medium text-red-500">id {id}</p>
+          <p className="text-sm font-medium text-red-500">Item No {id}</p>
           <p className="text-sm text-gray-600">
-            Item No <span className="text-gray-800">{itemNumber}</span>
+            <span className="text-gray-800">{category.toUpperCase()}</span>
           </p>
         </div>
 
-        {/* Title */}
+        {/* name */}
         <h2 className="text-lg font-bold text-gray-900 mb-2 leading-snug">
-          {title}
+          {name}
         </h2>
 
         {/* description if provided */}
@@ -72,9 +82,7 @@ export default function ProductCard({
 
         {/* Price Section */}
         <div className="flex items-baseline gap-3 mb-2">
-          <span className="text-2xl font-bold text-blue-600">
-            ${price.toFixed(2)}
-          </span>
+          <span className="text-2xl font-bold text-blue-600">${price}</span>
         </div>
 
         {/* Selling Info */}
@@ -89,9 +97,15 @@ export default function ProductCard({
           </p>
         )}
 
-        {/* Add to Cart Button */}
         <button
-          onClick={onAddToCart}
+          onClick={() =>
+            onAddToCart?.({
+              id,
+              name,
+              price,
+              imageUrl,
+            })
+          }
           className="w-full bg-blue-500 hover:bg-blue-600 text-white font-semibold py-3 rounded-full transition-colors flex items-center justify-center gap-2"
         >
           <span>Add To Cart</span>

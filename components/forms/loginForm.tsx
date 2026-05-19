@@ -37,8 +37,8 @@ const LoginForm = () => {
     try {
       let loading = true;
       setError(false);
-      const res = await axiosAuth.post("/auth/login", value);
-      const token = res.data;
+      const res = await axiosAuth.post("auth/login", value);
+      const token = res.data.data;
 
       if (typeof window !== "undefined") {
         localStorage.setItem("data", token);
@@ -106,6 +106,18 @@ const LoginForm = () => {
         >
           Login
         </Button>
+
+        <div className="flex items-center justify-center space-x-3">
+          <p>Don't Have Account?</p>
+          <a
+            href="/signup"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="font-bold text-blue-500 hover:underline"
+          >
+            Sign Up Here
+          </a>
+        </div>
       </form>
     </Form>
   );

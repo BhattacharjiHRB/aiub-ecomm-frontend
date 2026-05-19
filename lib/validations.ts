@@ -16,3 +16,12 @@ export const merchantValidation = z.object({
   address: z.string().min(1, "Address is required"),
   phoneNumber: z.string().min(1, "Phone number is required"),
 });
+
+export const signupValidation = z.object({
+  email: z.string().email(),
+  password: z.string().min(6),
+  name: z.string().min(2),
+  username: z.string().min(3),
+  address: z.string().min(5),
+  phoneNumber: z.string().min(10),
+});

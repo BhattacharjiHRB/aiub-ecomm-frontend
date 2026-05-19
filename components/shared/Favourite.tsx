@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 
 export interface WishlistItemData {
   id: string;
-  title: string;
+  name: string;
   price: number;
   imageUrl: string;
 }
