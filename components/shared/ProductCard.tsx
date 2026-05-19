@@ -66,10 +66,11 @@ export default function ProductCard({
             <span className="text-gray-800">{category.toUpperCase()}</span>
           </p>
         </div>
-
-        <h2 className="mb-2 text-lg font-bold leading-snug text-gray-900">
-          {name}
-        </h2>
+        <a href={`/products/${productData.id}`}>
+          <h2 className="mb-2 text-lg font-bold leading-snug text-gray-900">
+            {name}
+          </h2>
+        </a>
 
         {description && (
           <p className="mb-4 text-sm text-gray-600">{description}</p>
