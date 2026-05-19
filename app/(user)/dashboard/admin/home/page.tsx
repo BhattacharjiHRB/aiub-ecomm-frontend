@@ -92,7 +92,7 @@ export default function DashboardPage() {
           </p>
         </div>
         <div className="flex gap-2">
-          <Link href="/admin/products/create">
+          <Link href="/dashboard/add-product">
             <Button
               size="sm"
               className="bg-gray-900 hover:bg-gray-800 text-white rounded-lg gap-1.5 text-xs"

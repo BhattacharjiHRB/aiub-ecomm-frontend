@@ -1,17 +1,12 @@
 "use client";
 
 import { useState } from "react";
-import axios from "axios";
 
 import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { axiosPost } from "@/lib/axios";
 
 export default function AddProductPage() {
   const [loading, setLoading] = useState(false);
@@ -28,9 +23,7 @@ export default function AddProductPage() {
 
   // Handle Input Change
   const handleChange = (
-    e: React.ChangeEvent<
-      HTMLInputElement | HTMLTextAreaElement
-    >
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   ) => {
     setFormData({
       ...formData,
@@ -39,18 +32,14 @@ export default function AddProductPage() {
   };
 
   // Handle Image Change
-  const handleImageChange = (
-    e: React.ChangeEvent<HTMLInputElement>
-  ) => {
+  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
       setImages(e.target.files);
     }
   };
 
   // Submit Form
-  const handleSubmit = async (
-    e: React.FormEvent
-  ) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     try {
@@ -59,10 +48,7 @@ export default function AddProductPage() {
       const data = new FormData();
 
       data.append("name", formData.name);
-      data.append(
-        "description",
-        formData.description
-      );
+      data.append("description", formData.description);
       data.append("price", formData.price);
       data.append("stock", formData.stock);
       data.append("category", formData.category);
@@ -74,16 +60,7 @@ export default function AddProductPage() {
         }
       }
 
-      const res = await axios.post(
-        "http://localhost:3000/products",
-        data,
-        {
-          headers: {
-            "Content-Type":
-              "multipart/form-data",
-          },
-        }
-      );
+      const res = await axiosPost.post("products", data);
 
       console.log(res.data);
 
@@ -112,16 +89,11 @@ export default function AddProductPage() {
       <div className="mx-auto max-w-3xl">
         <Card className="rounded-2xl shadow-sm">
           <CardHeader>
-            <CardTitle className="text-3xl font-bold">
-              Add Product
-            </CardTitle>
+            <CardTitle className="text-3xl font-bold">Add Product</CardTitle>
           </CardHeader>
 
           <CardContent>
-            <form
-              onSubmit={handleSubmit}
-              className="space-y-6"
-            >
+            <form onSubmit={handleSubmit} className="space-y-6">
               {/* Product Name */}
               <div>
                 <label className="mb-2 block text-sm font-medium">
@@ -221,22 +193,18 @@ export default function AddProductPage() {
               {/* Preview */}
               {images && (
                 <div className="grid grid-cols-2 gap-4 md:grid-cols-4">
-                  {Array.from(images).map(
-                    (image, index) => (
-                      <div
-                        key={index}
-                        className="overflow-hidden rounded-xl border"
-                      >
-                        <img
-                          src={URL.createObjectURL(
-                            image
-                          )}
-                          alt="preview"
-                          className="h-28 w-full object-cover"
-                        />
-                      </div>
-                    )
-                  )}
+                  {Array.from(images).map((image, index) => (
+                    <div
+                      key={index}
+                      className="overflow-hidden rounded-xl border"
+                    >
+                      <img
+                        src={URL.createObjectURL(image)}
+                        alt="preview"
+                        className="h-28 w-full object-cover"
+                      />
+                    </div>
+                  ))}
                 </div>
               )}
 
@@ -246,9 +214,7 @@ export default function AddProductPage() {
                 disabled={loading}
                 className="h-12 w-full rounded-xl bg-black text-white hover:bg-black/90"
               >
-                {loading
-                  ? "Adding Product..."
-                  : "Add Product"}
+                {loading ? "Adding Product..." : "Add Product"}
               </Button>
             </form>
           </CardContent>

@@ -17,8 +17,8 @@ export const sidebarLinks = [
 
   {
     imgUrl: "/assets/icons/graph.svg",
-    route: "/analytics",
-    label: "Analytics",
+    route: "products",
+    label: "Products",
   },
   {
     imgUrl: "/assets/icons/book.svg",
